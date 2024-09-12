@@ -1,0 +1,369 @@
+# ★第一部分，系统配置
+port: 7890        # HTTP 代理端口
+socks-port: 7891  # SOCKS5 代理端口
+mixed-port: 1080  # HTTP and SOCKS5 代理 混合端口
+redir-port: 17891 # 透明代理端口, Linux and macOS 使用，包括Openwrt
+allow-lan: true
+bind-address: "*" # 是否允许局域网连接，bind-address: "*" 代表允许所有
+mode: "rule"        # 运行模式，rule 规则 / global 全局 / direct 直连
+log-level: "silent" # info / warning / error / debug / silent # silent 表示静默
+#interface-name: 本地连接            # 出口网卡名称，例如“本地连接”，Tun 模式使用
+ipv6: false                          # true 启用，false 关闭
+external-controller: "0.0.0.0:9090"  # 面板调用地址为 本机ip:9090 或 http://clash.razord.top
+external-ui: "面板2"                 # 本地面板文件夹，"面板1"，"面板2" 自选
+secret: ""                           # secret: "" 无需密码，secret: "1234" 密码1234
+
+
+
+# ★第二部分，DNS配置
+# 下方为DNS配置，如无此段，关闭DNS功能，此段设置与规则配合使用
+# 本模板用域名白名单分流，小白谨慎修改DNS，114.114.114.114 可替换为从ISP自动获取的地址
+dns:
+  enable: true                     # true 启用，false 关闭
+  listen: 0.0.0.0:1053             # 监听端口，openwrt转发端口注意
+
+  enhanced-mode: fake-ip # redir-host                         # redir-host/fake-ip 模式
+  fake-ip-range: 198.18.0.1/16 # Fake IP addresses pool CIDR  # 小白请勿修改
+  fake-ip-filter:                                             # fake-ip 白名单
+    - '*.lan'
+    - 'localhost.ptlogin2.qq.com'
+    - 'dns.msftncsi.com'
+    - 'www.msftncsi.com'
+    - 'www.msftconnecttest.com'
+
+  nameserver:
+    - 114.114.114.114              # 默认DNS
+    - 223.5.5.5 
+ 
+
+
+
+# ★第三部分，代理配置
+#############################################★注意，★★替换
+proxies:                                           # 自建节点列表
+
+  # ★Trojan 自建节点 1
+  - name: "Trojan01"                               # 节点名，与下方组设置一致，否则报错
+    type: trojan                                   # 节点类型
+    server: game.ml                              # ★★服务器，替换为你自己的
+    port: 443
+    password: pig9o9                             # ★★密码，替换为你自己的
+    udp: true
+    
+  # ★Trojan 自建节点 2
+  - name: "Trojan02"                               # 节点名，与下方组设置一致，否则报错
+    type: trojan                                   # 节点类型
+    server: game.ml                              # ★★服务器，替换为你自己的
+    port: 443
+    password: pig9o9                             # ★★密码，替换为你自己的
+    udp: true    
+
+  # ★V2ray 自建节点 1  ★Vmess+TLS+Websocket 方式
+  - name: "V2ray01"                                # 节点名，与下方组设置一致，否则报错
+    type: vmess                                    # 节点类型
+    server: abc.ml                              # ★★服务器，替换为你自己的
+    port: 443
+    uuid: b0983552-5382-4a6c-b5d3-59b9cf90cfe6  # ★★UUID，替换为你自己的
+    alterId: 2
+    cipher: auto
+    udp: true
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /0ec3                              # ★★websocket路径，替换为你自己的
+   
+  # ★V2ray 自建节点 2  ★Vmess+TLS+Websocket 方式
+  - name: "V2ray02"                                # 节点名，与下方组设置一致，否则报错
+    type: vmess                                    # 节点类型
+    server: game.ml                             # ★★服务器，替换为你自己的
+    port: 443
+    uuid: 268bd2dd-21fe-5811-4651-f9ecac3f2ce8  # ★★UUID，替换为你自己的
+    alterId: 2
+    cipher: auto
+    udp: true
+    tls: true
+    skip-cert-verify: false
+    network: ws
+    ws-path: /ws                                # ★★websocket路径，替换为你自己的
+
+  # ★V2ray ★搬瓦工 Just My Socks V2ray节点 ★1
+  - name: "瓦工 1"                                 # 节点名，与下方组设置一致，否则报错
+    type: vmess                                    # 节点类型
+    server: s3.jamjams.net                      # ★★服务器，替换为你自己的
+    port: 8077                                  # ★★端口，替换为你自己的
+    uuid: 4d76b58d-ca9d-41a7-81a5-55fe6f37e40a  # ★★UUID，替换为你自己的
+    alterId: 2
+    cipher: auto
+    udp: true
+    skip-cert-verify: false
+    network: tcp
+
+  # ★V2ray ★搬瓦工 Just My Socks V2ray节点 ★2
+  - name: "瓦工 2"                                 # 节点名，与下方组设置一致，否则报错
+    type: vmess                                    # 节点类型
+    server: s4.jamjams.net                      # ★★服务器，替换为你自己的
+    port: 8077                                  # ★★端口，替换为你自己的
+    uuid: 4d76b58d-ca9d-41a7-81a5-55fe6f37e40a  # ★★UUID，替换为你自己的
+    alterId: 2
+    cipher: auto
+    udp: true
+    skip-cert-verify: false
+    network: tcp
+
+  # ★V2ray ★搬瓦工 Just My Socks V2ray节点 ★3
+  - name: "瓦工 3"                                 # 节点名，与下方组设置一致，否则报错
+    type: vmess                                    # 节点类型
+    server: s5.jamjams.net                      # ★★服务器，替换为你自己的
+    port: 8077                                  # ★★端口，替换为你自己的
+    uuid: 4d76b58d-ca9d-41a7-81a5-55fe6f37e40a  # ★★UUID，替换为你自己的
+    alterId: 2
+    cipher: auto
+    udp: true
+    skip-cert-verify: false
+    network: tcp
+
+  # Shadowsocks 加密模式
+  # The supported ciphers (encryption methods):
+  #   aes-128-gcm aes-192-gcm aes-256-gcm
+  #   aes-128-cfb aes-192-cfb aes-256-cfb
+  #   aes-128-ctr aes-192-ctr aes-256-ctr
+  #   rc4-md5 chacha20-ietf xchacha20
+  #   chacha20-ietf-poly1305 xchacha20-ietf-poly1305
+
+  # ★Shadowsocks 无插件
+  - name: "Ss1"
+    type: ss
+    server: server                               # ★★服务器，替换为你自己的
+    port: 443                                    # ★★端口，替换为你自己的
+    cipher: chacha20-ietf-poly1305               # ★★加密方式，替换为你自己的
+    password: "password"                         # ★★密码，替换为你自己的
+    # udp: true
+
+  # ★Shadowsocks obfs插件
+  - name: "Ss2"
+    type: ss
+    server: server                               # ★★服务器，替换为你自己的
+    port: 443                                    # ★★端口，替换为你自己的
+    cipher: chacha20-ietf-poly1305               # ★★加密方式，替换为你自己的
+    password: "password"                         # ★★密码，替换为你自己的
+    plugin: obfs
+    plugin-opts:
+      mode: tls # or http
+      host: bing.com
+
+  # ★Shadowsocks v2ray-plugin插件
+  - name: "Ss3"
+    type: ss
+    server: server                               # ★★服务器，替换为你自己的
+    port: 443                                    # ★★端口，替换为你自己的
+    cipher: chacha20-ietf-poly1305               # ★★加密方式，替换为你自己的
+    password: "password"                         # ★★密码，替换为你自己的
+    plugin: v2ray-plugin
+    plugin-opts:
+      mode: websocket # no QUIC now
+      tls: true # wss
+      skip-cert-verify: true
+      # host: bing.com
+      path: "/000"                               # ★★websocket路径，替换为你自己的
+      # mux: true
+      # headers:
+      # custom: value
+
+  # ★Snell ★Surge的协议，暂不支持UDP
+  # Snell
+  # Beware that there's currently no UDP support yet
+  - name: "Snell"
+    type: snell
+    server: server                               # ★★服务器，替换为你自己的
+    port: 44046                                  # ★★端口，替换为你自己的
+    psk: yourpsk                                 # ★★密码，替换为你自己的
+    version: 2                                   # ★★替换为你自己的
+    obfs-opts: 
+      mode: http # or tls                        # ★★替换为你自己的
+      host: bing.com
+
+  # ★ShadowsocksR
+  # The supported ciphers (encryption methods): all stream ciphers in ss
+  # The supported obfses:
+  #   plain http_simple http_post
+  #   random_head tls1.2_ticket_auth tls1.2_ticket_fastauth
+  # The supported supported protocols:
+  #   origin auth_sha1_v4 auth_aes128_md5
+  #   auth_aes128_sha1 auth_chain_a auth_chain_b  
+  - name: "Ssr"
+    type: ssr
+    server: server                               # ★★服务器，替换为你自己的
+    port: 443                                    # ★★端口，替换为你自己的
+    cipher: chacha20-ietf                        # ★★加密方式，替换为你自己的
+    password: "password"                         # ★★密码，替换为你自己的
+    obfs: tls1.2_ticket_auth                     # ★★替换为你自己的
+    protocol: auth_sha1_v4                       # ★★替换为你自己的
+    # obfs-param: domain.tld
+    # protocol-param: "#"
+    # udp: true
+
+proxy-groups:                                   # 代理组列表
+
+  - name: "自建组"                              # ★组名，包含下面的（节点/组）
+    type: url-test                              # url-test 表示自动切换最快节点
+    proxies:
+      - Trojan01                                # 节点名，与上方设置一致，否则报错
+      - Trojan02                                # 节点名，与上方设置一致，否则报错
+      - V2ray01                                 # 节点名，与上方设置一致，否则报错
+      - V2ray02                                 # 节点名，与上方设置一致，否则报错
+      - 瓦工 1                                  # 节点名，与上方设置一致，否则报错
+      - 瓦工 2                                  # 节点名，与上方设置一致，否则报错
+      - 瓦工 3                                  # 节点名，与上方设置一致，否则报错
+      - Ss1                                     # 节点名，与上方设置一致，否则报错
+      - Ss2                                     # 节点名，与上方设置一致，否则报错
+      - Ss3                                     # 节点名，与上方设置一致，否则报错
+      - Snell                                   # 节点名，与上方设置一致，否则报错
+      - Ssr                                     # 节点名，与上方设置一致，否则报错
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+
+  - name: "鸡场组"                              # ★组名，包含下面的（节点/组）
+    type: url-test                              # url-test 表示自动切换最快节点
+    use:                                        # 使用机场节点
+      - 鸡场节点                                # 机场节点代理组名称
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+
+  - name: "合体组"                              # ★组名，包含下面的（节点/组）
+    type: url-test                              # url-test 表示自动切换最快节点
+    use:                                        # 使用机场节点
+      - 鸡场节点                                # 机场节点代理组名称
+    proxies:
+      - Trojan01                                # 节点名，与上方设置一致，否则报错
+      - Trojan02                                # 节点名，与上方设置一致，否则报错
+      - V2ray01                                 # 节点名，与上方设置一致，否则报错
+      - V2ray02                                 # 节点名，与上方设置一致，否则报错
+      - 瓦工 1                                  # 节点名，与上方设置一致，否则报错
+      - 瓦工 2                                  # 节点名，与上方设置一致，否则报错
+      - 瓦工 3                                  # 节点名，与上方设置一致，否则报错
+      - Ss1                                     # 节点名，与上方设置一致，否则报错
+      - Ss2                                     # 节点名，与上方设置一致，否则报错
+      - Ss3                                     # 节点名，与上方设置一致，否则报错
+      - Snell                                   # 节点名，与上方设置一致，否则报错
+      - Ssr                                     # 节点名，与上方设置一致，否则报错
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+
+  - name: "FuckWall"                              # ★组名，包含下面的（节点/组）
+    type: select                                # select 表示手动切换，默认proxies第一个
+    use:                                        # 使用机场节点
+      - 鸡场节点                                # 机场节点代理组名称
+    proxies:                                    # 代理节点（组）列表
+      - 合体组                                  # ★组名    与上方设置一致，否则报错
+      - 鸡场组                                  # ★组名    与上方设置一致，否则报错
+      - 自建组                                  # ★组名    与上方设置一致，否则报错
+      - Trojan01                                # 节点名  与上方设置一致，否则报错
+      - Trojan02                                # 节点名，与上方设置一致，否则报错
+      - V2ray01                                 # 节点名，与上方设置一致，否则报错
+      - V2ray02                                 # 节点名，与上方设置一致，否则报错
+      - 瓦工 1                                  # 节点名，与上方设置一致，否则报错
+      - 瓦工 2                                  # 节点名，与上方设置一致，否则报错
+      - 瓦工 3                                  # 节点名，与上方设置一致，否则报错
+      - Ss1                                     # 节点名，与上方设置一致，否则报错
+      - Ss2                                     # 节点名，与上方设置一致，否则报错
+      - Ss3                                     # 节点名，与上方设置一致，否则报错
+      - Snell                                   # 节点名，与上方设置一致，否则报错
+      - Ssr                                     # 节点名，与上方设置一致，否则报错
+
+proxy-providers:                             # 机场配置字段
+  "鸡场节点":                                 # 组名，与上方设置一致否则报错
+    type: http                               # http 线上更新，file 使用本地文件
+   #★★机场订阅网址★★
+    url: "订阅地址"
+    interval: 3600                           # 更新间隔3600秒
+    path: ./订阅.yaml  #本地文件，不可缺失，否则上面网址失效则报错，不合语法也报错
+    health-check:
+      enable: true
+      interval: 600
+      url: http://www.gstatic.com/generate_204
+ 
+
+
+
+# ★第四部分，规则配置
+###规则集来自★Loyalsoldier★大神
+###默认关闭规则自动更新，启用去掉url行最前面的#，仅删除#，不要删除空格
+rule-providers:
+  reject:                                    # 拒绝连接
+    type: http                               # http 线上更新，file 使用本地文件 
+    behavior: domain                         # 域名规则
+    #url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
+    path: ./规则/reject.yaml    #本地文件，不可缺失，否则上面网址失效则报错，下同
+    interval: 86400                          # 更新间隔 86400 秒，下同
+
+  icloud:                                    # icloud
+    type: http                               # http 线上更新，file 使用本地文件
+    behavior: domain                         # 域名规则
+    #url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/icloud.txt"
+    path: ./规则/icloud.yaml
+    interval: 86400
+
+  apple:                                     # apple
+    type: http                               # http 线上更新，file 使用本地文件
+    behavior: domain                         # 域名规则
+    #url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/apple.txt"
+    path: ./规则/apple.yaml
+    interval: 86400
+
+  google:                                    # google
+    type: http                               # http 线上更新，file 使用本地文件
+    behavior: domain                         # 域名规则
+    #url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/google.txt"
+    path: ./规则/google.yaml
+    interval: 86400
+
+  proxy:                                     # 使用代理
+    type: http                               # http 线上更新，file 使用本地文件
+    behavior: domain                         # 域名规则
+    #url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt"
+    path: ./规则/proxy.yaml
+    interval: 86400
+
+  direct:                                    # 使用直连
+    type: http                               # http 线上更新，file 使用本地文件
+    behavior: domain                         # 域名规则
+    #url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt"
+    path: ./规则/direct.yaml
+    interval: 86400
+
+  cncidr:                                    # 国内IP
+    type: http                               # http 线上更新，file 使用本地文件
+    behavior: ipcidr                         # IP规则
+    #url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/cncidr.txt"
+    path: ./规则/cncidr.yaml
+    interval: 86400
+
+  lancidr:                                   # 局域网IP
+    type: http                               # http 线上更新，file 使用本地文件
+    behavior: ipcidr                         # IP规则
+    #url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/lancidr.txt"
+    path: ./规则/lancidr.yaml
+    interval: 86400
+
+rules:
+  #- RULE-SET,reject,REJECT       # reject 表的域名，拒绝，对应上方reject.yaml，依此类推
+  #- RULE-SET,icloud,DIRECT                  # icloud 表的域名，直连
+  #- RULE-SET,apple,DIRECT                   # apple  表的域名，直连
+  #- RULE-SET,google,DIRECT                  # google 表的域名，直连
+  #- RULE-SET,proxy,FuckWall                 # proxy  表的域名，走 FcukWall 组
+  - RULE-SET,direct,DIRECT                   # direct 表的域名，直连
+  #- RULE-SET,lancidr,DIRECT,no-resolve      # lancidr 表的IP，直连
+  #- RULE-SET,cncidr,DIRECT,no-resolve       # cncidr  表的IP，直连
+  - MATCH,FuckWall                           # 未匹配到的，走 FuckWall 组
+
+
+  # 上方规则仅启用了两个，请按需自选，当然也可修改为google等列表走代理
+  #  - RULE-SET,direct,DIRECT
+  #  - MATCH,FuckWall 
+  # 表示大陆域名直连，剩下全部走代理组 FuckWall
+  # 以下两行实现 google.com 走 “瓦工 1”，youtube.com 走“瓦工 2”
+  #  - DOMAIN,google.com,瓦工 1
+  #  - DOMAIN,youtube.com,瓦工 2
+  # “瓦工 1，2”对应上方节点，灵活使用，即可实现强大的分流功能，具体自己研究吧
+  # 还有其他问题，请参看官方文档
+  

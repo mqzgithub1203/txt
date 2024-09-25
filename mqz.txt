@@ -14,6 +14,9 @@ vless://fc44fe6a-f083-4591-9c03-f8d61dc3907f@www.visa.com.tw:8443?security=tls&s
 vless://fc44fe6a-f083-4591-9c03-f8d61dc3907f@www.visa.com.tw:8443?security=tls&sni=mcstio1.cfsite.eu.org&type=ws&path=/vless?ed%3D2048&host=mcstio1.cfsite.eu.org&encryption=none#mcst.io-DE-Contabo_GmbH
 vmess://eyJhZGQiOiJ3d3cudmlzYS5jb20udHciLCJhaWQiOiIwIiwiaG9zdCI6Im1jc3RpbzEuY2ZzaXRlLmV1Lm9yZyIsImlkIjoiZmM0NGZlNmEtZjA4My00NTkxLTljMDMtZjhkNjFkYzM5MDdmIiwibmV0Ijoid3MiLCJwYXRoIjoiL3ZtZXNzP2VkPTIwNDgiLCJwb3J0IjoiODQ0MyIsInBzIjoibWNzdC5pby1ERS1Db250YWJvX0dtYkgiLCJzY3kiOiJub25lIiwic25pIjoibWNzdGlvMS5jZnNpdGUuZXUub3JnIiwidGxzIjoidGxzIiwidHlwZSI6Im5vbmUiLCJ2IjoiMiJ9
 trojan://fc44fe6a-f083-4591-9c03-f8d61dc3907f@www.visa.com.tw:8443?security=tls&sni=mcstio1.cfsite.eu.org&type=ws&path=/trojan?ed%3D2048&host=mcstio1.cfsite.eu.org#mcst.io-DE-Contabo_GmbH
+trojan://0afd527c-17f6-4238-b447-792b58eb644c@government.se:443?security=tls&sni=paradise-electric-chest-chief.trycloudflare.com&type=ws&path=/trojan?ed%3D2048&host=paradise-electric-chest-chief.trycloudflare.com#Connect%20Hosting%20Free%20server-FI-Hetzner_Online
+vmess://eyJhZGQiOiJnb3Zlcm5tZW50LnNlIiwiYWlkIjoiMCIsImhvc3QiOiJwYXJhZGlzZS1lbGVjdHJpYy1jaGVzdC1jaGllZi50cnljbG91ZGZsYXJlLmNvbSIsImlkIjoiMGFmZDUyN2MtMTdmNi00MjM4LWI0NDctNzkyYjU4ZWI2NDRjIiwibmV0Ijoid3MiLCJwYXRoIjoiL3ZtZXNzP2VkPTIwNDgiLCJwb3J0IjoiNDQzIiwicHMiOiJDb25uZWN0IEhvc3RpbmcgRnJlZSBzZXJ2ZXItRkktSGV0em5lcl9PbmxpbmUiLCJzY3kiOiJub25lIiwic25pIjoicGFyYWRpc2UtZWxlY3RyaWMtY2hlc3QtY2hpZWYudHJ5Y2xvdWRmbGFyZS5jb20iLCJ0bHMiOiJ0bHMiLCJ0eXBlIjoibm9uZSIsInYiOiIyIn0=
+vless://0afd527c-17f6-4238-b447-792b58eb644c@government.se:443?security=tls&sni=paradise-electric-chest-chief.trycloudflare.com&type=ws&path=/vless?ed%3D2048&host=paradise-electric-chest-chief.trycloudflare.com&encryption=none#Connect%20Hosting%20Free%20server-FI-Hetzner_Online
 订阅
 http://venus.hidencloud.com:25657/sub
 http://n2.us.nexiocloud.com:25416/list/fd80f56e-93f3-4c85-b2a8
